@@ -100,7 +100,7 @@ class MainPageState extends State<MainPageWidget> {
     initData();
     return Scaffold(
       appBar: new AppBar(
-        title: new Text("识字"),
+        title: new Text(appBarTitles[_tabIndex]),
       ),
       body: _bodys[_tabIndex],
       bottomNavigationBar: new BottomNavigationBar(

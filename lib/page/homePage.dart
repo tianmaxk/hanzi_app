@@ -30,8 +30,10 @@ class _HomePage extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    pageno = 1;
-    _getHanziList();
+    if(_wenziList.length<=0){
+      pageno = 1;
+      _getHanziList();
+    }
   }
 
   @override
