@@ -1,2 +1,8 @@
 # hanzi_app
-一个用flutter做的汉字字典app demo
+
+A new Flutter application.
+
+## Getting Started
+
+For help getting started with Flutter, view our online
+[documentation](https://flutter.io/).
