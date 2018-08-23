@@ -20,7 +20,7 @@ class HanziDetails extends StatelessWidget {
     print('$wenziInfo["name"]');
     final double wid = MediaQuery.of(context).size.width-16.0;
     String meaning = wenziInfo["meaning"];
-    meaning = meaning.substring(0, meaning.indexOf("\nUNICODE\n"));
+    // meaning = meaning.substring(0, meaning.indexOf("\nUNICODE\n"));
     return new Scaffold(
         appBar: new AppBar(
           titleSpacing: 12.0,
@@ -36,7 +36,8 @@ class HanziDetails extends StatelessWidget {
                 children: <Widget>[
                   new Image.asset('images/hanzibg.gif',width: wid??300.0, fit: BoxFit.fill,),
                   new Image(
-                    image: new NetworkImage('http://www.chaziwang.com/pic/zi/${wenziInfo["unicode"].toUpperCase()}.gif'),
+                    image: new NetworkImage(wenziInfo["hanzipic"]),
+//                    image: new NetworkImage('http://www.chaziwang.com/pic/zi/${wenziInfo["unicode"].toUpperCase()}.gif'),
                     width: wid??300.0,
                     fit: BoxFit.fill,
                   ),

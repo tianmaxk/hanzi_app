@@ -29,6 +29,7 @@ class MainPageState extends State<MainPageWidget> {
   int _tabIndex = 0;
   var tabImages;
   var appBarTitles = ['查字', '识字', '记忆', '考试'];
+  var _pageController = new PageController(initialPage: 0);
 
   /*
    * 根据image路径获取图片
@@ -59,6 +60,7 @@ class MainPageState extends State<MainPageWidget> {
           style: new TextStyle(color: const Color(0xff888888)));
     }
   }
+
   /*
    * 存储的四个页面，和Fragment一样
    */
@@ -95,6 +97,17 @@ class MainPageState extends State<MainPageWidget> {
     ];
   }
 
+  void _pageChange(int index){
+    print('pageChange index=$index');
+    setState(() {
+      if(_tabIndex!=index){
+        _tabIndex = index;
+        _pageController.jumpToPage(index);
+//        _pageController.animateToPage(index, duration: new Duration(seconds: 2),curve:new ElasticOutCurve(0.8));
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     initData();
@@ -102,7 +115,19 @@ class MainPageState extends State<MainPageWidget> {
       appBar: new AppBar(
         title: new Text(appBarTitles[_tabIndex]),
       ),
-      body: _bodys[_tabIndex],
+//      body: _bodys[_tabIndex],
+//如下的PageView是帮助实现滑动效果的
+      body: new PageView.builder(
+          onPageChanged: _pageChange,
+          controller: _pageController,
+          itemBuilder: (BuildContext context,int index){
+            print('itemBuilder index=${index}');
+            if(index>=0 && index<_bodys.length){
+              return _bodys[index];
+            }
+          },
+          itemCount: _bodys.length,
+      ),
       bottomNavigationBar: new BottomNavigationBar(
         items: <BottomNavigationBarItem>[
           new BottomNavigationBarItem(
@@ -119,10 +144,15 @@ class MainPageState extends State<MainPageWidget> {
         //设置当前的索引
         currentIndex: _tabIndex,
         //tabBottom的点击监听
-        onTap: (index) {
-          setState(() {
-            _tabIndex = index;
-          });
+//        onTap: (index) {
+//          setState(() {
+//            _tabIndex = index;
+//          });
+//        },
+    //如下是实现滑动切换效果的
+        onTap: (int index) {
+          print('onTap index=$index');
+          _pageChange(index);
         },
       ),
     );

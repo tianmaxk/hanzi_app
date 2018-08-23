@@ -7,17 +7,21 @@ class HomePage extends StatefulWidget {
   HomePage({Key key}) : super(key: key);
 
   @override
-  _HomePage createState() => new _HomePage();
+  State<StatefulWidget> createState() => new _HomePage();
+//  _HomePage createState() => new _HomePage();
 }
 
-class _HomePage extends State<HomePage> {
-
+class _HomePage extends State<HomePage> with AutomaticKeepAliveClientMixin {
   var _wenziList = [];
   int pageno = 1;
-  bool showBottom = true;
+  bool busy = false;
+
+  @override
+  bool get wantKeepAlive => true;
 
   _getHanziList({int pagesize:15}) async {
     var hanziinfo = await Api().getHanziList(page:pageno, pagesize:pagesize);
+    busy = false;
     var hanzilist = json.decode(hanziinfo)['list'];
     setState(() {
       if(hanzilist!=null) {
@@ -39,7 +43,7 @@ class _HomePage extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return new RefreshIndicator(
-       child: new NotificationListener<ScrollNotification>(
+      child: new NotificationListener<ScrollNotification>(
           onNotification: _handleScrollNotification,
           child: new GridView.count(
                 primary: false,
@@ -49,7 +53,7 @@ class _HomePage extends State<HomePage> {
                 crossAxisSpacing: 8.0,//横向间距
                 children: buildGridTileList(_wenziList.length)
             ),
-       ),
+      ),
       onRefresh: () async {
         setState(() {
           _wenziList.clear();
@@ -67,11 +71,11 @@ class _HomePage extends State<HomePage> {
       print('notification.metrics.extentAfter=${notification.metrics.extentAfter}');
       //下滑到最底部
       if(notification.metrics.extentAfter==0.0){
-        setState(() {
-          showBottom = true;
-        });
-        pageno++;
-        _getHanziList();
+        if(!busy){
+          busy = true;
+          pageno++;
+          _getHanziList();
+        }
       }
       //滑动到最顶部
       if(notification.metrics.extentBefore==0.0){
@@ -103,8 +107,8 @@ class _HomePage extends State<HomePage> {
     return new InkWell(
         onTap: () {_gotoWenziDtl(wenzi);},
         child: new Image(
-//          image: new NetworkImage(wenzi["hanzipic"]),
-          image: new NetworkImage('http://www.chaziwang.com/pic/zi/${wenzi["unicode"].toUpperCase()}.gif'),
+          image: new NetworkImage(wenzi["hanzipic"]),
+//          image: new NetworkImage('http://www.chaziwang.com/pic/zi/${wenzi["unicode"].toUpperCase()}.gif'),
           fit: BoxFit.cover,
         ),
       );
