@@ -1,31 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
-import 'page/homePage.dart';
+import 'page/homeHanzi.dart';
 import 'page/ocrPage.dart';
 import 'page/memoryPage.dart';
 import 'page/examinePage.dart';
 
-class MainPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return new MaterialApp(
-        debugShowCheckedModeBanner: false,
-//        routes: <String, WidgetBuilder>{
-//          "/Demo1": (BuildContext context) => new Demo1(),
-//        },
-        home: new MainPageWidget());
-  }
-}
-
-class MainPageWidget extends StatefulWidget {
+class MainPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
     return new MainPageState();
   }
 }
 
-class MainPageState extends State<MainPageWidget> {
+class MainPageState extends State<MainPage> {
   int _tabIndex = 0;
   var tabImages;
   var appBarTitles = ['查字', '识字', '记忆', '考试'];
@@ -91,7 +79,7 @@ class MainPageState extends State<MainPageWidget> {
     ];
 
     _bodys = [
-      new HomePage(needAll:needAll),
+      new HomeHanzi(needAll:needAll),
       new OCRPage(),
       new MemoryPage(),
       new ExaminePage()
@@ -99,7 +87,7 @@ class MainPageState extends State<MainPageWidget> {
   }
 
   void _pageChange(int index){
-    print('pageChange index=$index');
+//    print('pageChange index=$index');
     setState(() {
       if(_tabIndex!=index){
         _tabIndex = index;
@@ -116,7 +104,8 @@ class MainPageState extends State<MainPageWidget> {
   }
 
   void _onSearch(){
-
+//    print('onserch');
+    Navigator.pushNamed(context, "/findhanzi");
   }
 
   dynamic buildAction(int index){
@@ -163,7 +152,7 @@ class MainPageState extends State<MainPageWidget> {
           onPageChanged: _pageChange,
           controller: _pageController,
           itemBuilder: (BuildContext context,int index){
-            print('itemBuilder index=${index}');
+//            print('itemBuilder index=${index}');
             if(index>=0 && index<_bodys.length){
               return _bodys[index];
             }
@@ -193,7 +182,7 @@ class MainPageState extends State<MainPageWidget> {
 //        },
     //如下是实现滑动切换效果的
         onTap: (int index) {
-          print('onTap index=$index');
+//          print('onTap index=$index');
           _pageChange(index);
         },
       ),

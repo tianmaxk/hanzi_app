@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'mainPage.dart';
+import 'page/findHanzi.dart';
 
 void main() => runApp(new MyApp());
 
@@ -11,7 +12,10 @@ class MyApp extends StatelessWidget {
       theme: new ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MainPage(),
+      routes: <String, WidgetBuilder>{
+        '/': (BuildContext context) => new MainPage(),
+        '/findhanzi': (BuildContext context) => new FindHanzi(),
+      },
     );
   }
 }

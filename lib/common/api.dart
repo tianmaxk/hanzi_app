@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 
-const root = 'http://47.96.84.101:8080';
+//const root = 'http://47.96.84.101:8080';
+const root = 'http://47.96.84.101:8081';
 
 class Api {
 
@@ -79,14 +80,23 @@ class Api {
     }
   }
 
-  dynamic getHanziList({int page:1, int pagesize:10, bool needAll:false}) async {
+  dynamic getHanziList({int page:1, int pagesize:10, bool needAll:false, String name:''}) async {
     Map<String,Object> param = {
       'page': page,
       'pagesize': pagesize,
-      'full': needAll?'y':'n'
+      'full': needAll?'y':'n',
+      'keyword': name
     };
     print(param);
     return await get('/hanzi/page',param);
+  }
+
+  dynamic findHanzi(String name) async {
+    Map<String,Object> param = {
+      'name': name
+    };
+    print(param);
+    return await get('/hanzi/find',param);
   }
 
 }

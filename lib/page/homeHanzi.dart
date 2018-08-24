@@ -3,16 +3,16 @@ import 'dart:convert';
 import '../common/api.dart';
 import 'hanziDetails.dart';
 
-class HomePage extends StatefulWidget {
+class HomeHanzi extends StatefulWidget {
   bool needAll = false;
-  HomePage({Key key,this.needAll}) : super(key: key);
+  HomeHanzi({Key key,this.needAll}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => new _HomePage();
 //  _HomePage createState() => new _HomePage();
 }
 
-class _HomePage extends State<HomePage> with AutomaticKeepAliveClientMixin {
+class _HomePage extends State<HomeHanzi> with AutomaticKeepAliveClientMixin {
   var _wenziList = [];
   int pageno = 1;
   bool busy = false;
@@ -53,27 +53,36 @@ class _HomePage extends State<HomePage> with AutomaticKeepAliveClientMixin {
       pageno = 1;
       _getHanziList();
     }
-    return new RefreshIndicator(
-      child: new NotificationListener<ScrollNotification>(
+    if(_wenziList.length<=0){
+      return Center(
+        child: Image.asset("images/loading.gif",width: 100.0,),
+      );
+    } else {
+      return new RefreshIndicator(
+        child: new NotificationListener<ScrollNotification>(
           onNotification: _handleScrollNotification,
           child: new GridView.count(
-                primary: false,
-                padding: const EdgeInsets.all(8.0),
-                mainAxisSpacing: 8.0,//竖向间距
-                crossAxisCount: 3,//横向Item的个数
-                crossAxisSpacing: 8.0,//横向间距
-                children: buildGridTileList(_wenziList.length)
-            ),
-      ),
-      onRefresh: () async {
-        setState(() {
-          _wenziList.clear();
-        });
-        pageno = 1;
-        _getHanziList();
-        return null;
-      },
-    );
+              primary: false,
+              padding: const EdgeInsets.all(8.0),
+              mainAxisSpacing: 8.0,
+              //竖向间距
+              crossAxisCount: 3,
+              //横向Item的个数
+              crossAxisSpacing: 8.0,
+              //横向间距
+              children: buildGridTileList(_wenziList.length)
+          ),
+        ),
+        onRefresh: () async {
+          setState(() {
+            _wenziList.clear();
+          });
+          pageno = 1;
+          _getHanziList();
+          return null;
+        },
+      );
+    }
   }
 
   bool _handleScrollNotification(ScrollNotification notification){
