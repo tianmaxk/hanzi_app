@@ -30,6 +30,7 @@ class MainPageState extends State<MainPageWidget> {
   var tabImages;
   var appBarTitles = ['查字', '识字', '记忆', '考试'];
   var _pageController = new PageController(initialPage: 0);
+  bool needAll = false;
 
   /*
    * 根据image路径获取图片
@@ -90,7 +91,7 @@ class MainPageState extends State<MainPageWidget> {
     ];
 
     _bodys = [
-      new HomePage(),
+      new HomePage(needAll:needAll),
       new OCRPage(),
       new MemoryPage(),
       new ExaminePage()
@@ -108,15 +109,56 @@ class MainPageState extends State<MainPageWidget> {
     });
   }
 
+  void _handlePopupMenu(BuildContext context, String value){
+    setState(() {
+      needAll = (value=='all');
+    });
+  }
+
+  void _onSearch(){
+
+  }
+
+  dynamic buildAction(int index){
+    if(index==0){
+      return <Widget>[
+        new IconButton(icon: new Icon(Icons.search), onPressed: _onSearch),
+        new PopupMenuButton<String>(
+          onSelected: (String value) { _handlePopupMenu(context, value); },
+          itemBuilder: (BuildContext context) => <PopupMenuItem<String>>[
+            new PopupMenuItem<String>(
+              value: 'chang',
+              child: Text('常用字',
+                style: TextStyle(
+                  color: needAll?Colors.grey:Colors.blue,
+                ),
+              ),
+            ),
+            new PopupMenuItem<String>(
+              value: 'all',
+              child: Text('所有字',
+                style: TextStyle(
+                  color: needAll?Colors.blue:Colors.grey,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ];
+    }
+    return <Widget>[];
+  }
+
   @override
   Widget build(BuildContext context) {
     initData();
     return Scaffold(
       appBar: new AppBar(
         title: new Text(appBarTitles[_tabIndex]),
+        actions: buildAction(_tabIndex),
       ),
 //      body: _bodys[_tabIndex],
-//如下的PageView是帮助实现滑动效果的
+      //如下的PageView是帮助实现滑动效果的
       body: new PageView.builder(
           onPageChanged: _pageChange,
           controller: _pageController,

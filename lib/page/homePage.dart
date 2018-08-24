@@ -4,7 +4,8 @@ import '../common/api.dart';
 import 'hanziDetails.dart';
 
 class HomePage extends StatefulWidget {
-  HomePage({Key key}) : super(key: key);
+  bool needAll = false;
+  HomePage({Key key,this.needAll}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => new _HomePage();
@@ -15,12 +16,13 @@ class _HomePage extends State<HomePage> with AutomaticKeepAliveClientMixin {
   var _wenziList = [];
   int pageno = 1;
   bool busy = false;
+  bool oriNeedAll = false;
 
   @override
   bool get wantKeepAlive => true;
 
   _getHanziList({int pagesize:15}) async {
-    var hanziinfo = await Api().getHanziList(page:pageno, pagesize:pagesize);
+    var hanziinfo = await Api().getHanziList(page:pageno, pagesize:pagesize, needAll:widget.needAll);
     busy = false;
     var hanzilist = json.decode(hanziinfo)['list'];
     setState(() {
@@ -42,6 +44,15 @@ class _HomePage extends State<HomePage> with AutomaticKeepAliveClientMixin {
 
   @override
   Widget build(BuildContext context) {
+    print('oriNeedAll=${oriNeedAll}, needAll=${widget.needAll}');
+    if(oriNeedAll != widget.needAll){
+      oriNeedAll = widget.needAll;
+      setState(() {
+        _wenziList.clear();
+      });
+      pageno = 1;
+      _getHanziList();
+    }
     return new RefreshIndicator(
       child: new NotificationListener<ScrollNotification>(
           onNotification: _handleScrollNotification,

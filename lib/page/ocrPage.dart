@@ -10,7 +10,7 @@ class OCRPage extends StatefulWidget {
 class _OCRPage extends State<OCRPage> with AutomaticKeepAliveClientMixin {
 
   @override
-  bool get wantKeepAlive => false;
+  bool get wantKeepAlive => true;
 
   @override
   Widget build(BuildContext context) {

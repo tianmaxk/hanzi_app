@@ -79,11 +79,13 @@ class Api {
     }
   }
 
-  dynamic getHanziList({int page:1, int pagesize:10}) async {
+  dynamic getHanziList({int page:1, int pagesize:10, bool needAll:false}) async {
     Map<String,Object> param = {
       'page': page,
       'pagesize': pagesize,
+      'full': needAll?'y':'n'
     };
+    print(param);
     return await get('/hanzi/page',param);
   }
 

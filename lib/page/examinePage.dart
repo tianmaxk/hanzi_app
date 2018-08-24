@@ -10,7 +10,7 @@ class ExaminePage extends StatefulWidget {
 class _ExaminePage extends State<ExaminePage> with AutomaticKeepAliveClientMixin {
 
   @override
-  bool get wantKeepAlive => false;
+  bool get wantKeepAlive => true;
 
   @override
   Widget build(BuildContext context) {

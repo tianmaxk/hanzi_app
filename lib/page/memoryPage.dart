@@ -10,7 +10,7 @@ class MemoryPage extends StatefulWidget {
 class _MemoryPage extends State<MemoryPage> with AutomaticKeepAliveClientMixin {
 
   @override
-  bool get wantKeepAlive => false;
+  bool get wantKeepAlive => true;
 
   @override
   Widget build(BuildContext context) {
