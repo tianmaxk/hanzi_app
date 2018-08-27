@@ -57,7 +57,6 @@ class _FindHanziPage extends State<FindHanziPage> {
 
   @override
   Widget build(BuildContext context) {
-
     return Column(
       children: <Widget>[
         Container(

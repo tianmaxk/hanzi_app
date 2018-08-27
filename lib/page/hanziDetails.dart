@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:audioplayers/audio_cache.dart';
 import 'package:audioplayers/audioplayers.dart';
+import 'dart:convert';
 import '../common/tts.dart';
+import '../common/api.dart';
 
 AudioPlayer advancedPlayer = new AudioPlayer();
 
@@ -23,6 +25,15 @@ class _HanziDetails extends State<HanziDetails> {
     advancedPlayer.play(url);
   }
 
+  _findHanziByKeywords(String key) async {
+    var hanziinfo = await Api().findHanzi(key);
+    setState(() {
+      try{
+        widget.wenziInfo = json.decode(hanziinfo);
+      }catch(e){}
+    });
+  }
+
   initPlatformState() async {
     // Platform messages may fail, so we use a try/catch PlatformException.
     languages = await Tts.getAvailableLanguages();
@@ -37,17 +48,27 @@ class _HanziDetails extends State<HanziDetails> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    String meaning = widget.wenziInfo["meaning"];
+    if(meaning==null){
+      _findHanziByKeywords(widget.wenziInfo["name"]);
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     print('$widget.wenziInfo["name"]');
-    final double wid = MediaQuery.of(context).size.width-16.0;
     String meaning = widget.wenziInfo["meaning"];
-    // meaning = meaning.substring(0, meaning.indexOf("\nUNICODE\n"));
+    final double wid = MediaQuery.of(context).size.width-16.0;
     return new Scaffold(
         appBar: new AppBar(
           titleSpacing: 12.0,
           title: const Text('汉字'),
         ),
-        body: new SingleChildScrollView(
+        body: (meaning==null) ? (new Center(
+            child: Image.asset("images/loading.gif",width: 100.0,),
+          )) : new SingleChildScrollView(
           padding: const EdgeInsets.all(8.0),
           child: new Column(
             crossAxisAlignment: CrossAxisAlignment.start,

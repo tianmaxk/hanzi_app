@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import '../common/api.dart';
+import '../common/file_util.dart';
 import 'hanziDetails.dart';
+
+const String wenziListCachePath = "wenziListCache";
+const int wenzipagesize = 15;
 
 class HomeHanzi extends StatefulWidget {
   bool needAll = false;
@@ -9,7 +13,6 @@ class HomeHanzi extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() => new _HomePage();
-//  _HomePage createState() => new _HomePage();
 }
 
 class _HomePage extends State<HomeHanzi> with AutomaticKeepAliveClientMixin {
@@ -21,7 +24,37 @@ class _HomePage extends State<HomeHanzi> with AutomaticKeepAliveClientMixin {
   @override
   bool get wantKeepAlive => true;
 
-  _getHanziList({int pagesize:15}) async {
+  _saveCache(var list){
+    var info = [];
+    for(var i=0;i<list.length;i++){
+      var ln = {};
+      ln['name'] = list[i]['name'];
+      ln['unicode'] = list[i]['unicode'];
+      info.add(ln);
+    }
+    String cache = json.encode(info);
+    FileUtil.writeFileAsString(wenziListCachePath, cache);
+  }
+
+  _getFromCacheThenFromList() async{
+    String info = await FileUtil.readFileAsString(wenziListCachePath);
+    if(info!=null && info.isNotEmpty){
+      var hanzilist = json.decode(info);
+      if(hanzilist!=null && hanzilist.length>0) {
+        setState(() {
+          pageno = (hanzilist.length/15).toInt();
+          print('pageno=$pageno');
+          _wenziList.addAll(hanzilist);
+          print('_wenziList from cache=$_wenziList');
+        });
+        return;
+      }
+    }
+    pageno = 1;
+    _getHanziList();
+  }
+
+  _getHanziList({int pagesize:wenzipagesize}) async {
     var hanziinfo = await Api().getHanziList(page:pageno, pagesize:pagesize, needAll:widget.needAll);
     busy = false;
     var hanzilist = json.decode(hanziinfo)['list'];
@@ -30,6 +63,7 @@ class _HomePage extends State<HomeHanzi> with AutomaticKeepAliveClientMixin {
         _wenziList.addAll(hanzilist);
       }
       print('_wenziList=$_wenziList');
+      _saveCache(_wenziList);
     });
   }
 
@@ -38,7 +72,7 @@ class _HomePage extends State<HomeHanzi> with AutomaticKeepAliveClientMixin {
     super.initState();
     if(_wenziList.length<=0){
       pageno = 1;
-      _getHanziList();
+      _getFromCacheThenFromList();
     }
   }
 
@@ -48,6 +82,7 @@ class _HomePage extends State<HomeHanzi> with AutomaticKeepAliveClientMixin {
     if(oriNeedAll != widget.needAll){
       oriNeedAll = widget.needAll;
       setState(() {
+        FileUtil.deleteFile(wenziListCachePath);
         _wenziList.clear();
       });
       pageno = 1;
@@ -75,6 +110,7 @@ class _HomePage extends State<HomeHanzi> with AutomaticKeepAliveClientMixin {
         ),
         onRefresh: () async {
           setState(() {
+            FileUtil.deleteFile(wenziListCachePath);
             _wenziList.clear();
           });
           pageno = 1;
@@ -127,8 +163,7 @@ class _HomePage extends State<HomeHanzi> with AutomaticKeepAliveClientMixin {
     return new InkWell(
         onTap: () {_gotoWenziDtl(wenzi);},
         child: new Image(
-          image: new NetworkImage(wenzi["hanzipic"]),
-//          image: new NetworkImage('http://www.chaziwang.com/pic/zi/${wenzi["unicode"].toUpperCase()}.gif'),
+          image: new NetworkImage('http://www.chaziwang.com/pic/zi/${wenzi["unicode"].toUpperCase()}.gif'),
           fit: BoxFit.cover,
         ),
       );
