@@ -4,6 +4,7 @@ import 'package:audioplayers/audioplayers.dart';
 import 'dart:convert';
 import '../common/tts.dart';
 import '../common/api.dart';
+import 'writeHanzi.dart';
 
 AudioPlayer advancedPlayer = new AudioPlayer();
 
@@ -32,6 +33,15 @@ class _HanziDetails extends State<HanziDetails> {
         widget.wenziInfo = json.decode(hanziinfo);
       }catch(e){}
     });
+  }
+
+  _gotoWriteHanzi() {
+    Navigator.push(
+        context,
+        new MaterialPageRoute(
+          builder: (BuildContext context) => new WriteHanzi(wenziInfo: widget.wenziInfo),
+        )
+    );
   }
 
   initPlatformState() async {
@@ -74,16 +84,19 @@ class _HanziDetails extends State<HanziDetails> {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              new Stack(
-                children: <Widget>[
-                  new Image.asset('images/hanzibg.gif',width: wid??300.0, fit: BoxFit.fill,),
-                  new Image(
-                    image: new NetworkImage(widget.wenziInfo["hanzipic"]),
+              new InkWell(
+                onTap: (){_gotoWriteHanzi();},
+                child: new Stack(
+                  children: <Widget>[
+                    new Image.asset('images/hanzibg.gif',width: wid??300.0, fit: BoxFit.fill,),
+                    new Image(
+                      image: new NetworkImage(widget.wenziInfo["hanzipic"]),
 //                    image: new NetworkImage('http://www.chaziwang.com/pic/zi/${wenziInfo["unicode"].toUpperCase()}.gif'),
-                    width: wid??300.0,
-                    fit: BoxFit.fill,
-                  ),
-                ],
+                      width: wid??300.0,
+                      fit: BoxFit.fill,
+                    ),
+                  ],
+                ),
               ),
               new Row(
                 children: <Widget>[

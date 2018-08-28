@@ -19,6 +19,7 @@ dependencies:
   dio: ^0.1.6
   audioplayers: ^0.7.5
   path_provider: ^0.4.0
+  painter: ^0.3.1
 
 dev_dependencies:
   flutter_test:
