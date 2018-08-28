@@ -93,7 +93,7 @@ class _HomePage extends State<HomeHanzi> with AutomaticKeepAliveClientMixin {
         child: Image.asset("images/loading.gif",width: 100.0,),
       );
     } else {
-      return new RefreshIndicator(
+      Widget bodyWid = new RefreshIndicator(
         child: new NotificationListener<ScrollNotification>(
           onNotification: _handleScrollNotification,
           child: new GridView.count(
@@ -118,6 +118,22 @@ class _HomePage extends State<HomeHanzi> with AutomaticKeepAliveClientMixin {
           return null;
         },
       );
+        //这是背景效果，目前不需要这个效果
+//      return new ShaderMask(
+//        shaderCallback: (Rect bounds) {
+//          return new RadialGradient(
+//            center: Alignment.topLeft,
+//            radius: 1.0,
+//            colors: <Color>[Colors.yellow, Colors.deepOrange.shade900],
+//            tileMode: TileMode.mirror,
+//          ).createShader(bounds);
+//        },
+//        child: bodyWid,
+//      );
+      return new Stack(children: <Widget>[
+        bodyWid,
+        busy?new Opacity(opacity: 0.5,child: new Container(color: Colors.grey,),):new Container()
+      ],);
     }
   }
 
@@ -127,10 +143,12 @@ class _HomePage extends State<HomeHanzi> with AutomaticKeepAliveClientMixin {
       print('notification.metrics.extentAfter=${notification.metrics.extentAfter}');
       //下滑到最底部
       if(notification.metrics.extentAfter==0.0){
-        if(!busy){
-          busy = true;
-          pageno++;
-          _getHanziList();
+        if(!busy) {
+          setState(() {
+            busy = true;
+            pageno++;
+            _getHanziList();
+          });
         }
       }
       //滑动到最顶部
