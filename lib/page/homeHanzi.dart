@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 import '../common/api.dart';
 import '../common/file_util.dart';
+import '../widgets/progressWidget.dart';
 import 'hanziDetails.dart';
 
 const String wenziListCachePath = "wenziListCache";
@@ -132,7 +133,7 @@ class _HomePage extends State<HomeHanzi> with AutomaticKeepAliveClientMixin {
 //      );
       return new Stack(children: <Widget>[
         bodyWid,
-        busy?new Opacity(opacity: 0.5,child: new Container(color: Colors.grey,),):new Container()
+        busy?new Opacity(opacity: 0.5, child: new Container(color: Colors.grey,child: new Center(child: new ProgressBar(size: new Size(100.0, 20.0)))),):new Container()
       ],);
     }
   }
