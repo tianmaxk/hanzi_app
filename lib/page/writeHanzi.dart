@@ -56,11 +56,7 @@ class _WriteHanziPage extends State<WriteHanzi> {
                   new Stack(
                     children: <Widget>[
                       new Image.asset('images/hanzibg.gif',width: 120.0, fit: BoxFit.fill,),
-                      new Image(
-                        image: new NetworkImage(widget.wenziInfo["hanzipic"]),
-                        width: 120.0,
-                        fit: BoxFit.fill,
-                      ),
+                      new Image(image: new NetworkImage(widget.wenziInfo["bishun"]??widget.wenziInfo["hanzipic"]), width: 120.0, fit: BoxFit.fill,),
                     ],
                   ),
                   new Divider(height: 20.0,),

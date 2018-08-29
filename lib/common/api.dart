@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 
-//const root = 'http://47.96.84.101:8080';
-const root = 'http://47.96.84.101:8081';
+const root = 'http://47.96.84.101:8080';
+//const root = 'http://47.96.84.101:8081';
 
 class Api {
 
