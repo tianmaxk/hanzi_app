@@ -27,7 +27,6 @@ class _ProgressState extends State<ProgressBar> with TickerProviderStateMixin {
   void initState() {
     super.initState();
     for (int i = 0; i < widget.count; i++) {
-
       var animationController = new AnimationController(vsync: this,
           duration: Duration(milliseconds: widget.milliseconds * widget.count));
       animationController.value=0.8*i/widget.count;
@@ -67,12 +66,21 @@ class _ProgressState extends State<ProgressBar> with TickerProviderStateMixin {
   }
 
   @override
+  void deactivate(){
+    animators[0].removeListener(_change);
+  }
+
+  @override
   void dispose() {
     super.dispose();
-    animators[0].removeListener(_change);
-    for (AnimationController _animationController in _animationControllers) {
-      _animationController.dispose();
-    }
+    try{
+      animators[0].removeListener(_change);
+    } on Exception {}
+    try{
+      for (AnimationController _animationController in _animationControllers) {
+        _animationController.dispose();
+      }
+    } on Exception {}
   }
 }
 
