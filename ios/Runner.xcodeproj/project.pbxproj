@@ -14,6 +14,7 @@
 		3B80C3951E831B6300D905FE /* App.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3B80C3931E831B6300D905FE /* App.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		40DCFEF72137EAD500BA8E04 /* PathProviderPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 40DCFEF62137EAD400BA8E04 /* PathProviderPlugin.m */; };
 		40DCFEF92137EB7200BA8E04 /* AudioplayersPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 40DCFEF82137EB7200BA8E04 /* AudioplayersPlugin.m */; };
+		40DCFEFB2137F0D400BA8E04 /* TtsPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 40DCFEFA2137F0D400BA8E04 /* TtsPlugin.m */; };
 		9705A1C61CF904A100538489 /* Flutter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9740EEBA1CF902C7004384FC /* Flutter.framework */; };
 		9705A1C71CF904A300538489 /* Flutter.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9740EEBA1CF902C7004384FC /* Flutter.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		9740EEB41CF90195004384FC /* Debug.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 9740EEB21CF90195004384FC /* Debug.xcconfig */; };
@@ -47,6 +48,7 @@
 		3B80C3931E831B6300D905FE /* App.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = App.framework; path = Flutter/App.framework; sourceTree = "<group>"; };
 		40DCFEF62137EAD400BA8E04 /* PathProviderPlugin.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = PathProviderPlugin.m; path = Flutter/path_provider/PathProviderPlugin.m; sourceTree = "<group>"; };
 		40DCFEF82137EB7200BA8E04 /* AudioplayersPlugin.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = AudioplayersPlugin.m; path = Flutter/audioplayers/AudioplayersPlugin.m; sourceTree = "<group>"; };
+		40DCFEFA2137F0D400BA8E04 /* TtsPlugin.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = TtsPlugin.m; path = Runner/TtsPlugin.m; sourceTree = "<group>"; };
 		7AFA3C8E1D35360C0083082E /* Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Release.xcconfig; path = Flutter/Release.xcconfig; sourceTree = "<group>"; };
 		7AFFD8ED1D35381100E5BB4D /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		7AFFD8EE1D35381100E5BB4D /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -91,6 +93,7 @@
 		97C146E51CF9000F007C117D = {
 			isa = PBXGroup;
 			children = (
+				40DCFEFA2137F0D400BA8E04 /* TtsPlugin.m */,
 				40DCFEF82137EB7200BA8E04 /* AudioplayersPlugin.m */,
 				40DCFEF62137EAD400BA8E04 /* PathProviderPlugin.m */,
 				9740EEB11CF90186004384FC /* Flutter */,
@@ -239,6 +242,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				40DCFEFB2137F0D400BA8E04 /* TtsPlugin.m in Sources */,
 				40DCFEF92137EB7200BA8E04 /* AudioplayersPlugin.m in Sources */,
 				40DCFEF72137EAD500BA8E04 /* PathProviderPlugin.m in Sources */,
 				978B8F6F1D3862AE00F588F7 /* AppDelegate.m in Sources */,
