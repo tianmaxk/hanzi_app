@@ -86,6 +86,13 @@
             </list>
           </value>
         </entry>
+        <entry key="device_info">
+          <value>
+            <list>
+              <option value="$USER_HOME$/.pub-cache/hosted/pub.flutter-io.cn/device_info-0.2.1/lib" />
+            </list>
+          </value>
+        </entry>
         <entry key="dio">
           <value>
             <list>
@@ -444,6 +451,7 @@
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.flutter-io.cn/crypto-2.0.6/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.flutter-io.cn/csslib-0.14.4+1/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.flutter-io.cn/cupertino_icons-0.1.2/lib" />
+      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.flutter-io.cn/device_info-0.2.1/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.flutter-io.cn/dio-0.1.8/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.flutter-io.cn/front_end-0.1.4/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.flutter-io.cn/glob-1.1.7/lib" />
