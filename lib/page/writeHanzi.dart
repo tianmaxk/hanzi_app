@@ -12,6 +12,7 @@ class WriteHanzi extends StatefulWidget {
 class _WriteHanziPage extends State<WriteHanzi> {
   PainterController _controller;
   bool showHanziOutter = false;
+  bool showBiShun = true;
 
   PainterController _newController(){
     PainterController controller=new PainterController();
@@ -56,7 +57,14 @@ class _WriteHanziPage extends State<WriteHanzi> {
                   new Stack(
                     children: <Widget>[
                       new Image.asset('images/hanzibg.gif',width: 120.0, fit: BoxFit.fill,),
-                      new Image(image: new NetworkImage(widget.wenziInfo["bishun"]??widget.wenziInfo["hanzipic"]), width: 120.0, fit: BoxFit.fill,),
+                      new InkWell(
+                        onTap: (){
+                          setState(() {
+                            showBiShun = !showBiShun;
+                          });
+                        },
+                        child:  new Image(image: new NetworkImage(showBiShun?(widget.wenziInfo["bishun"]??widget.wenziInfo["hanzipic"]):widget.wenziInfo["hanzipic"]), width: 120.0, fit: BoxFit.fill,),
+                      )
                     ],
                   ),
                   new Divider(height: 20.0,),

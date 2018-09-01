@@ -98,14 +98,15 @@ class _HanziDetails extends State<HanziDetails> {
                   ],
                 ),
               ),
-              new Row(
-                children: <Widget>[
-                  new Text("拼音：${widget.wenziInfo["pinyin"]}",style: new TextStyle(fontSize:24.0),),
-                  new InkWell(
-                    onTap: (){_playSound(widget.wenziInfo["fayin"]);},
-                    child: new Icon(Icons.volume_up),
-                  )
-                ],
+              new Container(height: 10.0,),
+              new InkWell(
+                onTap: (){_playSound(widget.wenziInfo["fayin"]);},
+                child: new Row(
+                  children: <Widget>[
+                    new Text("拼音：${widget.wenziInfo["pinyin"]}",style: new TextStyle(fontSize:24.0),),
+                    new Icon(Icons.volume_up),
+                  ],
+                ),
               ),
               new Divider(height: 16.0,),
               new InkWell(
