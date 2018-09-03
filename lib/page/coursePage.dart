@@ -72,14 +72,17 @@ class _CoursePage extends State<CoursePage> with AutomaticKeepAliveClientMixin {
   List<Widget> buildGridTileList(int number) {
     List<Widget> widgetList = new List();
     for (int i = 0; i < number; i++) {
-      widgetList.add(getItemWidget(_wenziList[i],i<=learnCount));
+      widgetList.add(getItemWidget(_wenziList[i],i));
     }
     return widgetList;
   }
 
-  _gotoWenziDtl(var wenzi){
+  _gotoWenziDtl(var wenzi,int index){
     setState(() {
-      learnCount++;
+      if(index==learnCount){
+        learnCount++;
+        SPUtil.setString(SP_KEY_LEARN_COUNT, learnCount.toString());
+      }
     });
     Navigator.push(
         context,
@@ -87,15 +90,15 @@ class _CoursePage extends State<CoursePage> with AutomaticKeepAliveClientMixin {
           builder: (BuildContext context) => new HanziDetails(wenziInfo: wenzi),
         )
     );
-    SPUtil.setString(SP_KEY_LEARN_COUNT, learnCount.toString());
   }
 
-  Widget getItemWidget(var wenzi, bool unlock) {
+  Widget getItemWidget(var wenzi, int index) {
+    bool unlock = (index<=learnCount);
     String url = 'http://www.chaziwang.com/pic/zi/${wenzi["unicode"].toUpperCase()}.gif';
     if(unlock){
       //BoxFit 可设置展示图片时 的填充方式
       return new InkWell(
-        onTap: () {_gotoWenziDtl(wenzi);},
+        onTap: () {_gotoWenziDtl(wenzi,index);},
         child: new Image(
           image: new NetworkImage(url),
           fit: BoxFit.cover,

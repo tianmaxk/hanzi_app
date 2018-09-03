@@ -4,9 +4,8 @@ import 'package:flutter/services.dart';
 
 class PhoneInfo {
   static const MethodChannel _channel =
-  const MethodChannel('ptp.flutter.io/phoneinfo');
+  const MethodChannel('ptp.flutter.com/phoneinfo');
 
-  static Future<String> getIMEI () => _channel.invokeMethod('getIMEI');
-  static Future<String> getIMSI () => _channel.invokeMethod('getIMSI');
-
+  static Future<dynamic> getIMEI () => _channel.invokeMethod('getIMEI');
+  static Future<dynamic> getIMSI () => _channel.invokeMethod('getIMSI');
 }

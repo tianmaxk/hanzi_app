@@ -12,7 +12,7 @@ import android.util.Log;
 
 public class MainActivity extends FlutterActivity {
   private static final String TTSCHANNEL = "ptp.flutter.io/tts";
-  private static final String PHONECHANNEL = "ptp.flutter.io/phoneinfo";
+  private static final String PHONECHANNEL = "ptp.flutter.com/phoneinfo";
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {

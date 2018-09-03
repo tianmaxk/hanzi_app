@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:device_info/device_info.dart';
 import 'dart:async';
+import 'phoneInfo.dart';
 
 class DeviceInfo {
   static final DeviceInfoPlugin deviceInfoPlugin = new DeviceInfoPlugin();
@@ -10,6 +11,8 @@ class DeviceInfo {
     try {
       if (Platform.isAndroid) {
         deviceData = readAndroidBuildData(await deviceInfoPlugin.androidInfo);
+        var imei = await PhoneInfo.getIMSI();
+        deviceData.putIfAbsent("imei", ()=>imei);
       } else if (Platform.isIOS) {
         deviceData = readIosDeviceInfo(await deviceInfoPlugin.iosInfo);
       }

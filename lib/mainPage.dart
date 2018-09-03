@@ -5,7 +5,6 @@ import 'page/homeHanzi.dart';
 import 'page/coursePage.dart';
 import 'page/memoryPage.dart';
 import 'page/examinePage.dart';
-import 'common/phoneInfo.dart';
 
 class MainPage extends StatefulWidget {
   @override
@@ -20,16 +19,6 @@ class MainPageState extends State<MainPage> {
   var appBarTitles = ['查字', '课程', '记忆', '考试'];
   var _pageController = new PageController(initialPage: 0);
   bool needAll = false;
-
-  _getPhoneInfo() async {
-    String imei = await PhoneInfo.getIMSI();
-    print(imei);
-  }
-
-  @override
-  void initState(){
-    _getPhoneInfo();
-  }
 
   /*
    * 根据image路径获取图片
@@ -99,7 +88,6 @@ class MainPageState extends State<MainPage> {
   }
 
   void _pageChange(int index){
-//    print('pageChange index=$index');
     setState(() {
       if(_tabIndex!=index){
         _tabIndex = index;
@@ -115,7 +103,6 @@ class MainPageState extends State<MainPage> {
   }
 
   void _onSearch(){
-//    print('onserch');
     Navigator.pushNamed(context, "/findhanzi");
   }
 
