@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
 import 'page/homeHanzi.dart';
-import 'page/ocrPage.dart';
+import 'page/coursePage.dart';
 import 'page/memoryPage.dart';
 import 'page/examinePage.dart';
 import 'common/phoneInfo.dart';
@@ -17,7 +17,7 @@ class MainPage extends StatefulWidget {
 class MainPageState extends State<MainPage> {
   int _tabIndex = 0;
   var tabImages;
-  var appBarTitles = ['查字', '识字', '记忆', '考试'];
+  var appBarTitles = ['查字', '课程', '记忆', '考试'];
   var _pageController = new PageController(initialPage: 0);
   bool needAll = false;
 
@@ -48,6 +48,7 @@ class MainPageState extends State<MainPage> {
     }
     return tabImages[curIndex][0];
   }
+
   /*
    * 获取bottomTab的颜色和文字
    */
@@ -91,7 +92,7 @@ class MainPageState extends State<MainPage> {
 
     _bodys = [
       new HomeHanzi(needAll:needAll),
-      new OCRPage(),
+      new CoursePage(),
       new MemoryPage(),
       new ExaminePage()
     ];

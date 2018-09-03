@@ -21,6 +21,7 @@ dependencies:
   path_provider: ^0.4.0
   painter: ^0.3.1
   device_info: ^0.2.1
+  jaguar_flutter_asset: ^2.2.0
 
 dev_dependencies:
   flutter_test:
@@ -46,6 +47,7 @@ flutter:
     - images/memory.png
     - images/hanzibg.gif
     - images/loading.gif
+    - assets/course.txt
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.
