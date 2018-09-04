@@ -96,7 +96,8 @@ class Api {
       'name': name
     };
     print(param);
-    return await get('/hanzi/find',param);
+//    return await get('/hanzi/find',param);
+    return await get('/hanzi/findByName',param);
   }
 
 }

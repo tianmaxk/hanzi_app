@@ -41,7 +41,7 @@ class _FindHanziPage extends State<FindHanziPage> {
     setState(() {
       busy = false;
       try{
-        hanzi = json.decode(hanziinfo);
+        hanzi = json.decode(hanziinfo)["hanzi"];
       }catch(e){}
     });
   }

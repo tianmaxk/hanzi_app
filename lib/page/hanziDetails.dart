@@ -18,6 +18,7 @@ class HanziDetails extends StatefulWidget {
 
 class _HanziDetails extends State<HanziDetails> {
   bool isSpeak = false;
+  var fayinLst = [];
   List<String> languages;
 
   _playSound(String url){
@@ -30,7 +31,10 @@ class _HanziDetails extends State<HanziDetails> {
     var hanziinfo = await Api().findHanzi(key);
     setState(() {
       try{
-        widget.wenziInfo = json.decode(hanziinfo);
+        var hz = json.decode(hanziinfo);
+        print('hz=$hz');
+        widget.wenziInfo = hz["hanzi"];
+        fayinLst = hz["pylist"];
       }catch(e){}
     });
   }
@@ -45,7 +49,6 @@ class _HanziDetails extends State<HanziDetails> {
   }
 
   initPlatformState() async {
-    // Platform messages may fail, so we use a try/catch PlatformException.
     languages = await Tts.getAvailableLanguages();
   }
 
@@ -55,6 +58,43 @@ class _HanziDetails extends State<HanziDetails> {
       .replaceAll("、", "，");
     print('_noReadRedundantWords,meaning=$meaning');
     return meaning;
+  }
+
+  Widget _getFayinList(){
+    if(fayinLst.length>1){
+      List<Widget> lst = [];
+      lst.add(new Text("拼音：",style: new TextStyle(fontSize:24.0),));
+      for(int i=0;i<fayinLst.length;i++){
+//        lst.add(new Text(fayinLst[i]["pinyin"],style: new TextStyle(fontSize:24.0),));
+//        lst.add(new InkWell(
+//            onTap: (){_playSound(fayinLst[i]["fayin"]);},
+//            child: new Icon(Icons.volume_up))
+//        );
+        lst.add(new InkWell(
+            onTap: (){_playSound(fayinLst[i]["fayin"]);},
+            child: new Row(
+              children: <Widget>[
+                new Text(fayinLst[i]["pinyin"],style: new TextStyle(fontSize:24.0),),
+                new Icon(Icons.volume_up),
+                new Container(width: 10.0,)
+              ]),
+            )
+        );
+      }
+      return new Row(
+        children: lst,
+      );
+    } else {
+      return new InkWell(
+        onTap: (){_playSound(widget.wenziInfo["fayin"]);},
+        child: new Row(
+          children: <Widget>[
+            new Text("拼音：${widget.wenziInfo["pinyin"]}",style: new TextStyle(fontSize:24.0),),
+            new Icon(Icons.volume_up),
+          ],
+        ),
+      );
+    }
   }
 
   @override
@@ -71,6 +111,9 @@ class _HanziDetails extends State<HanziDetails> {
     print('$widget.wenziInfo["name"]');
     String meaning = widget.wenziInfo["meaning"];
     final double wid = MediaQuery.of(context).size.width-16.0;
+
+    Widget fayinWidget = _getFayinList();
+
     return new Scaffold(
         appBar: new AppBar(
           titleSpacing: 12.0,
@@ -99,15 +142,7 @@ class _HanziDetails extends State<HanziDetails> {
                 ),
               ),
               new Container(height: 10.0,),
-              new InkWell(
-                onTap: (){_playSound(widget.wenziInfo["fayin"]);},
-                child: new Row(
-                  children: <Widget>[
-                    new Text("拼音：${widget.wenziInfo["pinyin"]}",style: new TextStyle(fontSize:24.0),),
-                    new Icon(Icons.volume_up),
-                  ],
-                ),
-              ),
+              fayinWidget,
               new Divider(height: 16.0,),
               new InkWell(
                 onTap: (){
