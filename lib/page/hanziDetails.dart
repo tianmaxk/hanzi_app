@@ -74,7 +74,7 @@ class _HanziDetails extends State<HanziDetails> {
             onTap: (){_playSound(fayinLst[i]["fayin"]);},
             child: new Row(
               children: <Widget>[
-                new Text(fayinLst[i]["pinyin"],style: new TextStyle(fontSize:24.0),),
+                new Text(fayinLst[i]["name"],style: new TextStyle(fontSize:24.0),),
                 new Icon(Icons.volume_up),
                 new Container(width: 10.0,)
               ]),
