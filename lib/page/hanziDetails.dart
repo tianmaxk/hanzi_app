@@ -65,14 +65,10 @@ class _HanziDetails extends State<HanziDetails> {
       List<Widget> lst = [];
       lst.add(new Text("拼音：",style: new TextStyle(fontSize:24.0),));
       for(int i=0;i<fayinLst.length;i++){
-//        lst.add(new Text(fayinLst[i]["pinyin"],style: new TextStyle(fontSize:24.0),));
-//        lst.add(new InkWell(
-//            onTap: (){_playSound(fayinLst[i]["fayin"]);},
-//            child: new Icon(Icons.volume_up))
-//        );
         lst.add(new InkWell(
             onTap: (){_playSound(fayinLst[i]["fayin"]);},
-            child: new Row(
+            child: new Wrap(
+              direction: Axis.horizontal,
               children: <Widget>[
                 new Text(fayinLst[i]["name"],style: new TextStyle(fontSize:24.0),),
                 new Icon(Icons.volume_up),
@@ -81,7 +77,8 @@ class _HanziDetails extends State<HanziDetails> {
             )
         );
       }
-      return new Row(
+      return new Wrap(
+        direction: Axis.horizontal,
         children: lst,
       );
     } else {
