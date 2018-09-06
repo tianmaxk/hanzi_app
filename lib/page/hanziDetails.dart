@@ -10,7 +10,8 @@ AudioPlayer advancedPlayer = new AudioPlayer();
 
 class HanziDetails extends StatefulWidget {
   var wenziInfo = null;
-  HanziDetails({Key key, this.wenziInfo}) : super(key: key);
+  var pylist = [];
+  HanziDetails({Key key, this.wenziInfo, this.pylist}) : super(key: key);
 
   @override
   _HanziDetails createState() => new _HanziDetails();
@@ -22,7 +23,6 @@ class _HanziDetails extends State<HanziDetails> {
   List<String> languages;
 
   _playSound(String url){
-//    advancedPlayer.setUrl(url);
     advancedPlayer.setVolume(1.0);
     advancedPlayer.play(url);
   }
@@ -61,7 +61,7 @@ class _HanziDetails extends State<HanziDetails> {
   }
 
   Widget _getFayinList(){
-    if(fayinLst.length>1){
+    if(fayinLst!=null && fayinLst.length>1){
       List<Widget> lst = [];
       lst.add(new Text("拼音：",style: new TextStyle(fontSize:24.0),));
       for(int i=0;i<fayinLst.length;i++){
@@ -103,6 +103,8 @@ class _HanziDetails extends State<HanziDetails> {
     String meaning = widget.wenziInfo["meaning"];
     if(meaning==null){
       _findHanziByKeywords(widget.wenziInfo["name"]);
+    } else {
+      fayinLst = widget.pylist;
     }
   }
 

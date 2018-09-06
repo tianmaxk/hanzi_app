@@ -33,6 +33,7 @@ class FindHanziPage extends StatefulWidget {
 class _FindHanziPage extends State<FindHanziPage> {
   String keywords = "";
   var hanzi = null;
+  var pylist = [];
   bool busy = false;
   TextEditingController _controller = new TextEditingController.fromValue(new TextEditingValue(text: ""));
 
@@ -41,16 +42,18 @@ class _FindHanziPage extends State<FindHanziPage> {
     setState(() {
       busy = false;
       try{
-        hanzi = json.decode(hanziinfo)["hanzi"];
+        var hz = json.decode(hanziinfo);
+        hanzi = hz["hanzi"];
+        pylist = hz["pylist"];
       }catch(e){}
     });
   }
 
-  _gotoWenziDtl(var wenzi){
+  _gotoWenziDtl(var wenzi,var pylist){
     Navigator.push(
         context,
         new MaterialPageRoute(
-          builder: (BuildContext context) => new HanziDetails(wenziInfo: wenzi),
+          builder: (BuildContext context) => new HanziDetails(wenziInfo: wenzi,pylist:pylist),
         )
     );
   }
@@ -95,7 +98,7 @@ class _FindHanziPage extends State<FindHanziPage> {
         ),
         Container(
           child: hanzi==null?Container():new InkWell(
-            onTap: () {_gotoWenziDtl(hanzi);},
+            onTap: () {_gotoWenziDtl(hanzi,pylist);},
             child: new Image(
               image: new NetworkImage(hanzi["hanzipic"]),
               fit: BoxFit.cover,
