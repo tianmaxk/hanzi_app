@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 
 import 'page/homeHanzi.dart';
 import 'page/coursePage.dart';
-import 'page/memoryPage.dart';
+import 'page/pinyinPage.dart';
 import 'page/examinePage.dart';
 
 class MainPage extends StatefulWidget {
@@ -16,7 +16,7 @@ class MainPage extends StatefulWidget {
 class MainPageState extends State<MainPage> {
   int _tabIndex = 0;
   var tabImages;
-  var appBarTitles = ['查字', '课程', '记忆', '考试'];
+  var appBarTitles = ['查字', '课程', '拼音', '考试'];
   var _pageController = new PageController(initialPage: 0);
   bool needAll = false;
 
@@ -70,8 +70,8 @@ class MainPageState extends State<MainPage> {
         getTabImage('images/eye.png')
       ],
       [
-        getTabImage('images/memory.png'),
-        getTabImage('images/memory.png')
+        getTabImage('images/pinyinchar.png'),
+        getTabImage('images/pinyinchar.png')
       ],
       [
         getTabImage('images/examine.png'),
@@ -82,7 +82,7 @@ class MainPageState extends State<MainPage> {
     _bodys = [
       new HomeHanzi(needAll:needAll),
       new CoursePage(),
-      new MemoryPage(),
+      new PinyinPage(),
       new ExaminePage()
     ];
   }
