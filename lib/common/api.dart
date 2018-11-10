@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'sqlite_util.dart';
 
 const root = 'http://47.96.84.101:8080';
 //const root = 'http://47.96.84.101:8081';
@@ -88,7 +89,15 @@ class Api {
       'keyword': name
     };
     print(param);
-    return await get('/hanzi/page',param);
+    String url = '/hanzi/page';
+    String request = await sqliteUtil.getCache(url, param);
+    if (request!=null) {
+      return request;
+    } else {
+      dynamic response = await get(url,param);
+      sqliteUtil.saveCache(url, param, response);
+      return response;
+    }
   }
 
   dynamic findHanzi(String name) async {
@@ -96,8 +105,16 @@ class Api {
       'name': name
     };
     print(param);
-//    return await get('/hanzi/find',param);
-    return await get('/hanzi/findByName',param);
+    String url = '/hanzi/findByName';
+    String request = await sqliteUtil.getCache(url, param);
+    if (request!=null) {
+      return request;
+    } else {
+      //    return await get('/hanzi/find',param);
+      dynamic response = await get(url,param);
+      sqliteUtil.saveCache(url, param, response);
+      return response;
+    }
   }
 
 }

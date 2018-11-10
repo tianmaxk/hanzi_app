@@ -117,6 +117,9 @@ class _HanziDetails extends State<HanziDetails> {
         appBar: new AppBar(
           titleSpacing: 12.0,
           title: const Text('汉字'),
+          actions: <Widget>[
+            new IconButton(icon: new Icon(Icons.brush), onPressed: _gotoWriteHanzi)
+          ]
         ),
         body: (meaning==null) ? (new Center(
             child: Image.asset("images/loading.gif",width: 100.0,),
